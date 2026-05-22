@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Spider-Man June | Maynard Fine Arts Theatre</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome CDN -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+
+  <style>
+    :root {
+      --spider-red: #ff1744;
+      --spider-blue: #00b0ff;
+      --spider-dark: #05060a;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #101322 0, #02030a 45%, #000000 100%);
+      color: #e5e7eb;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+    }
+
+    /* Cinematic glow + subtle particles */
+    .cinematic-bg {
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .cinematic-bg::before,
+    .cinematic-bg::after {
+      content: "";
+      position: fixed;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 10% 20%, rgba(255, 23, 68, 0.12) 0, transparent 55%),
+        radial-gradient(circle at 80% 10%, rgba(0, 176, 255, 0.12) 0, transparent 55%),
+        radial-gradient(circle at 50% 90%, rgba(255, 23, 68, 0.08) 0, transparent 60%);
+      mix-blend-mode: screen;
+      opacity: 0.7;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .cinematic-bg::after {
+      background-image:
+        radial-gradient(circle, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+      background-size: 120px 120px;
+      opacity: 0.12;
+      animation: drift 40s linear infinite;
+    }
+
+    @keyframes drift {
+      from {
+        transform: translate3d(0, 0, 0);
+      }
+      to {
+        transform: translate3d(-80px, -80px, 0);
+      }
+    }
+
+    /* Neon text + glow */
+    .neon-red {
+      color: var(--spider-red);
+      text-shadow:
+        0 0 8px rgba(255, 23, 68, 0.9),
+        0 0 18px rgba(255, 23, 68, 0.7),
+        0 0 32px rgba(255, 23, 68, 0.5);
+    }
+
+    .neon-blue {
+      color: var(--spider-blue);
+      text-shadow:
+        0 0 8px rgba(0, 176, 255, 0.9),
+        0 0 18px rgba(0, 176, 255, 0.7),
+        0 0 32px rgba(0, 176, 255, 0.5);
+    }
+
+    .neon-border {
+      box-shadow:
+        0 0 0 1px rgba(148, 163, 184, 0.25),
+        0 0 18px rgba(255, 23, 68, 0.35),
+        0 0 32px rgba(0, 176, 255, 0.25);
+    }
+
+    .nav-blur {
+      backdrop-filter: blur(18px);
+      background: linear-gradient(
+        to right,
+        rgba(5, 6, 10, 0.96),
+        rgba(5, 6, 10, 0.9),
+        rgba(5, 6, 10, 0.96)
+      );
+      border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+      box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.9),
+        0 0 24px rgba(255, 23, 68, 0.25);
+    }
+
+    .nav-link {
+      position: relative;
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -0.2rem;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--spider-red), var(--spider-blue));
+      box-shadow:
+        0 0 8px rgba(255, 23, 68, 0.8),
+        0 0 12px rgba(0, 176, 255, 0.8);
+      transition: width 0.25s ease;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .nav-link:hover {
+      color: #f9fafb;
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: radial-gradient(circle at 20% 0, #ff4b6e 0, #ff1744 40%, #b00020 100%);
+      box-shadow:
+        0 0 16px rgba(255, 23, 68, 0.8),
+        0 0 40px rgba(255, 23, 68, 0.5);
+      transition: transform 0.15s ease, filter 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.08);
+      transform: translateY(-1px) translateZ(0);
+    }
+
+    .btn-outline {
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: radial-gradient(circle at 0 0, rgba(0, 176, 255, 0.25), transparent 55%);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--spider-blue);
+      box-shadow:
+        0 0 16px rgba(0, 176, 255, 0.7),
+        0 0 32px rgba(0, 176, 255, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .section-shell {
+      border-radius: 1.5rem;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.9), #020617);
+      box-shadow:
+        0 24px 80px rgba(0, 0, 0, 0.9),
+        0 0 40px rgba(15, 23, 42, 0.9);
+    }
+
+    .section-header {
+      letter-spacing: 0.18em;
+    }
+
+    .glow-divider {
+      height: 1px;
+      background: linear-gradient(
+        to right,
+        transparent,
+        rgba(148, 163, 184, 0.7),
+        transparent
+      );
+      box-shadow:
+        0 0 12px rgba(148, 163, 184, 0.8),
+        0 0 24px rgba(15, 23, 42, 0.9);
+    }
+
+    .card {
+      border-radius: 1.25rem;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.96), #020617);
+      box-shadow:
+        0 18px 60px rgba(0, 0, 0, 0.9),
+        0 0 24px rgba(15, 23, 42, 0.9);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow:
+        0 24px 80px rgba(0, 0, 0, 0.95),
+        0 0 40px rgba(15, 23, 42, 1);
+    }
+
+    .tag-pill {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: radial-gradient(circle at 0 0, rgba(255, 23, 68, 0.3), transparent 55%);
+    }
+
+    .input-field {
+      background: rgba(15, 23, 42, 0.9);
+      border-radius: 0.75rem;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+    }
+
+    .input-field:focus {
+      outline: none;
+      border-color: var(--spider-blue);
+      box-shadow:
+        0 0 0 1px rgba(0, 176, 255, 0.7),
+        0 0 24px rgba(0, 176, 255, 0.5);
+      transform: translateY(-1px);
+    }
+
+    .proposal-editable {
+      min-height: 220px;
+      white-space: pre-wrap;
+      outline: none;
+      cursor: text;
+    }
+
+    .proposal-editable:focus {
+      box-shadow:
+        0 0 0 1px rgba(0, 176, 255, 0.7),
+        0 0 24px rgba(0, 176, 255, 0.5);
+      border-color: var(--spider-blue);
+    }
+
+    .fade-in-up {
+      opacity: 0;
+      transform: translateY(18px);
+      animation: fadeInUp 0.9s ease forwards;
+    }
+
+    .fade-in-up-delayed {
+      opacity: 0;
+      transform: translateY(18px);
+      animation: fadeInUp 1s ease forwards;
+      animation-delay: 0.25s;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .confirm-burst {
+      animation: confirmBurst 0.6s ease-out;
+    }
+
+    @keyframes confirmBurst {
+      0% {
+        transform: scale(0.9);
+        opacity: 0;
+      }
+      40% {
+        transform: scale(1.05);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .copy-pulse {
+      animation: copyPulse 0.6s ease-out;
+    }
+
+    @keyframes copyPulse {
+      0% {
+        transform: scale(1);
+      }
+      40% {
+        transform: scale(1.06);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Prevent fixed header from covering anchors */
+    section[id] {
+      scroll-margin-top: 96px;
+    }
+
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2.4rem;
+        line-height: 1.1;
+      }
+    }
+  </style>
+</head>
+<body class="cinematic-bg text-slate-100">
+  <!-- Sticky Navigation -->
+  <header class="fixed top-0 inset-x-0 z-40 nav-blur">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center gap-3">
+          <div
+            class="h-9 w-9 rounded-full flex items-center justify-center neon-border bg-black/80"
+          >
+            <i class="fa-solid fa-spider text-[var(--spider-red)] text-lg"></i>
+          </div>
+          <div class="leading-tight">
+            <p class="text-xs uppercase tracking-[0.25em] text-slate-400">
+              Maynard Fine Arts Theatre
+            </p>
+            <p class="text-sm font-semibold text-slate-100">
+              Spider-Man June
+            </p>
+          </div>
+        </div>
+
+        <!-- Desktop Nav -->
+        <nav class="hidden md:flex items-center gap-8 text-xs font-medium uppercase tracking-[0.22em] text-slate-300">
+          <a href="#hero" class="nav-link">Hero</a>
+          <a href="#why" class="nav-link">Why Maynard</a>
+          <a href="#formats" class="nav-link">Formats</a>
+          <a href="#partners" class="nav-link">Partners</a>
+          <a href="#proposal" class="nav-link">Proposal</a>
+          <a href="#reserve" class="nav-link">Reserve</a>
+          <a href="#share" class="nav-link">Share</a>
+        </nav>
+
+        <!-- CTA + Mobile Toggle -->
+        <div class="flex items-center gap-3">
+          <a
+            href="#reserve"
+            class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-[0.22em] text-slate-50 btn-primary"
+          >
+            <span>Reserve Now</span>
+            <i class="fa-solid fa-ticket"></i>
+          </a>
+          <button
+            id="mobileNavToggle"
+            class="md:hidden inline-flex items-center justify-center h-9 w-9 rounded-full border border-slate-600 text-slate-200"
+            aria-label="Toggle navigation"
+          >
+            <i class="fa-solid fa-bars text-sm"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Nav -->
+      <nav
+        id="mobileNav"
+        class="md:hidden hidden flex-col gap-3 pb-4 text-[0.7rem] font-medium uppercase tracking-[0.22em] text-slate-300"
+      >
+        <a href="#hero" class="nav-link block">Hero</a>
+        <a href="#why" class="nav-link block">Why Maynard</a>
+        <a href="#formats" class="nav-link block">Formats</a>
+        <a href="#partners" class="nav-link block">Partners</a>
+        <a href="#proposal" class="nav-link block">Proposal</a>
+        <a href="#reserve" class="nav-link block">Reserve</a>
+        <a href="#share" class="nav-link block">Share</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="pt-24 pb-16">
+    <!-- HERO -->
+    <section id="hero" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+      <div class="section-shell p-6 sm:p-10 lg:p-12 fade-in-up">
+        <div class="flex flex-col lg:flex-row gap-10 lg:gap-12 items-center">
+          <div class="flex-1 space-y-6">
+            <div class="inline-flex items-center gap-2 tag-pill px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.25em] text-slate-200 mb-2">
+              <span class="h-1.5 w-1.5 rounded-full bg-[var(--spider-red)] shadow-[0_0_12px_rgba(255,23,68,0.9)]"></span>
+              <span>Exclusive Event Concept</span>
+              <span class="text-slate-400">|</span>
+              <span class="text-[var(--spider-blue)]">Spider-Verse Season</span>
+            </div>
+
+            <h1
+              class="hero-title text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-50"
+            >
+              <span class="block neon-red">SPIDER-MAN</span>
+              <span class="block neon-blue mt-1">JUNE</span>
+            </h1>
+
+            <p class="text-sm sm:text-base uppercase tracking-[0.28em] text-slate-400">
+              Swing Into Maynard Fine Arts Theatre
+            </p>
+
+            <p class="text-sm sm:text-base text-slate-300 max-w-xl leading-relaxed">
+              Imagine a full month where the web-slinger owns the marquee—historic neon glowing,
+              the whole town buzzing, and every showtime feeling like opening night. This is
+              <span class="font-semibold text-slate-50">Spider-Man June</span>:
+              a cinematic love letter to the Friendly Neighborhood Hero, staged in the heart of
+              downtown Maynard.
+            </p>
+
+            <div class="flex flex-wrap gap-3">
+              <button
+                onclick="document.getElementById('reserve').scrollIntoView({behavior:'smooth'})"
+                class="btn-primary inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold uppercase tracking-[0.22em] text-slate-50"
+              >
+                <i class="fa-solid fa-ticket text-sm"></i>
+                <span>Reserve Your Spot</span>
+              </button>
+              <button
+                onclick="document.getElementById('proposal').scrollIntoView({behavior:'smooth'})"
+                class="btn-outline inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold uppercase tracking-[0.22em] text-slate-100"
+              >
+                <i class="fa-solid fa-file-pen text-sm text-[var(--spider-blue)]"></i>
+                <span>View Official Proposal</span>
+              </button>
+            </div>
+
+            <div class="flex flex-col sm:flex-row flex-wrap gap-2 text-xs text-slate-400 pt-2">
+              <div class="flex items-center gap-2">
+                <i class="fa-solid fa-location-dot text-[var(--spider-red)]"></i>
+                <span>19 Summer St · Maynard, MA · Historic 1949 Theatre Place</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <i class="fa-solid fa-calendar-days text-[var(--spider-blue)]"></i>
+                <span>Concept Target: Summer 2026 · Spider-Man All Month Long</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- HERO VIDEO -->
+          <div class="flex-1 w-full">
+            <div class="relative card overflow-hidden neon-border">
+              <div class="absolute inset-0 pointer-events-none opacity-40 mix-blend-screen"
+                style="background:
+                  radial-gradient(circle at 10% 0, rgba(255,23,68,0.5) 0, transparent 55%),
+                  radial-gradient(circle at 90% 100%, rgba(0,176,255,0.5) 0, transparent 55%);">
+              </div>
+              <div class="relative aspect-video bg-black/80 flex items-center justify-center">
+                <!-- TODO: Replace the src below with the official Spider-Man June pitch video URL -->
+                <iframe
+                  class="w-full h-full rounded-xl border border-slate-700/70"
+                  src="https://www.youtube.com/embed/VIDEO_ID_PLACEHOLDER"
+                  title="Spider-Man June Pitch Video"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                ></iframe>
+              </div>
+              <div class="relative px-4 sm:px-5 py-3 flex items-center justify-between gap-3 border-t border-slate-700/70 bg-slate-950/80">
+                <div class="text-xs text-slate-300">
+                  <p class="font-semibold text-slate-100">
+                    Spider-Man June · Concept Sizzle Reel
+                  </p>
+                  <p class="text-[0.7rem] text-slate-400">
+                    A premium, Marvel-level event experience tailored for Maynard Fine Arts Theatre.
+                  </p>
+                </div>
+                <div class="hidden sm:flex items-center gap-2 text-[0.7rem] text-slate-400">
+                  <i class="fa-solid fa-circle-play text-[var(--spider-red)]"></i>
+                  <span>Cinematic Pitch Preview</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY MAYNARD FINE ARTS THEATRE -->
+    <section id="why" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+      <div class="section-shell p-6 sm:p-10 lg:p-12 fade-in-up-delayed">
+        <div class="flex flex-col lg:flex-row gap-10 lg:gap-12 items-start">
+          <div class="flex-1 space-y-5">
+            <p class="section-header text-[0.7rem] font-semibold uppercase text-slate-400">
+              Why Maynard Fine Arts Theatre?
+            </p>
+            <h2 class="text-2xl sm:text-3xl font-bold text-slate-50">
+              A 1949 neon landmark built for superhero-sized nights.
+            </h2>
+            <div class="glow-divider my-4"></div>
+            <p class="text-sm sm:text-base text-slate-300 leading-relaxed">
+              Spider-Man belongs on a glowing marquee—and Maynard Fine Arts Theatre already looks
+              like a frame from the movie. The historic
+              <span class="font-semibold text-slate-50">1949 Theatre Place</span> façade, the
+              <span class="text-[var(--spider-red)] font-semibold">iconic red neon marquee</span>,
+              and the intimate, single-screen charm create the perfect stage for a focused,
+              premium Spider-Man celebration.
+            </p>
+            <p class="text-sm sm:text-base text-slate-300 leading-relaxed">
+              Instead of getting lost in a multiplex, every guest steps into a curated experience:
+              one screen, one story, one hero—elevated by the character of downtown Maynard. The
+              theatre becomes the beating heart of Spider-Man June, with the town itself acting as
+              the extended universe.
+            </p>
+
+            <div class="grid sm:grid-cols-3 gap-4 pt-4">
+              <div class="card p-4 flex flex-col gap-2">
+                <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+                  <i class="fa-solid fa-landmark text-[var(--spider-blue)]"></i>
+                  <span>Historic Soul</span>
+                </div>
+                <p class="text-xs text-slate-300">
+                  Built in 1949, the theatre carries the nostalgia and gravitas that modern
+                  superhero epics deserve.
+                </p>
+              </div>
+              <div class="card p-4 flex flex-col gap-2">
+                <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+                  <i class="fa-solid fa-lightbulb text-[var(--spider-red)]"></i>
+                  <span>Neon Marquee</span>
+                </div>
+                <p class="text-xs text-slate-300">
+                  The glowing red marquee becomes the visual anchor of Spider-Man June—instantly
+                  Instagrammable, unmistakably cinematic.
+                </p>
+              </div>
+              <div class="card p-4 flex flex-col gap-2">
+                <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+                  <i class="fa-solid fa-people-group text-[var(--spider-blue)]"></i>
+                  <span>Intimate Energy</span>
+                </div>
+                <p class="text-xs text-slate-300">
+                  A single-screen, community-first venue means every show feels like a premiere,
+                  not just another listing.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- IMAGE / VISUAL PLACEHOLDER -->
+          <div class="flex-1 w-full">
+            <div class="card relative overflow-hidden">
+              <!-- TODO: Replace this block background with a photo of the Maynard Fine Arts Theatre exterior / marquee -->
+              <div
+                class="aspect-[4/3] bg-gradient-to-br from-red-900/60 via-slate-900 to-blue-900/70 flex items-center justify-center relative"
+              >
+                <div class="absolute inset-0 opacity-40 mix-blend-screen"
+                  style="background:
+                    radial-gradient(circle at 10% 0, rgba(255,23,68,0.7) 0, transparent 55%),
+                    radial-gradient(circle at 90% 100%, rgba(0,176,255,0.7) 0, transparent 55%);">
+                </div>
+                <div class="relative text-center px-6">
+                  <p class="text-[0.7rem] uppercase tracking-[0.3em] text-slate-300 mb-2">
+                    Visual Placeholder
+                  </p>
+                  <p class="text-lg sm:text-xl font-semibold text-slate-50">
+                    Drop in a cinematic night shot of the
+                    <span class="text-[var(--spider-red)]">glowing red marquee</span> to lock in
+                    the Spider-Man June mood.
+                  </p>
+                  <p class="mt-3 text-xs text-slate-300">
+                    The theatre itself becomes the poster—neon, brick, and history framing the
+                    Spider-Man logo.
+                  </p>
+                </div>
+              </div>
+              <div class="px-4 sm:px-5 py-3 border-t border-slate-700/70 bg-slate-950/80 text-[0.7rem] text-slate-400 flex items-center justify-between gap-3">
+                <span>
+                  Suggested asset: high-res exterior shot, dusk or night, marquee fully lit.
+                </span>
+                <i class="fa-solid fa-camera-retro text-slate-500"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHOOSE YOUR FORMAT -->
+    <section id="formats" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+      <div class="section-shell p-6 sm:p-10 lg:p-12 fade-in-up">
+        <div class="flex flex-col gap-6">
+          <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+            <div>
+              <p class="section-header text-[0.7rem] font-semibold uppercase text-slate-400">
+                Choose Your Format
+              </p>
+              <h2 class="text-2xl sm:text-3xl font-bold text-slate-50">
+                Weekly Themed Nights or an Epic Full Marathon.
+              </h2>
+            </div>
+            <div class="text-xs text-slate-400 max-w-md">
+              Two ways to swing through the Spider-Verse: build anticipation all month long, or
+              unleash a single, legendary marathon that becomes local lore.
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mt-2">
+            <!-- Weekly Themed Nights -->
+            <div class="card p-6 sm:p-7 flex flex-col gap-4 border border-[rgba(0,176,255,0.6)]">
+              <div class="flex items-center justify-between gap-3">
+                <div>
+                  <p class="text-xs uppercase tracking-[0.25em] text-[var(--spider-blue)]">
+                    Format One
+                  </p>
+                  <h3 class="text-xl font-semibold text-slate-50">
+                    Weekly Themed Nights
+                  </h3>
+                </div>
+                <span class="tag-pill px-3 py-1 text-[0.65rem] text-slate-100">
+                  <i class="fa-solid fa-calendar-week mr-1 text-[var(--spider-blue)]"></i>
+                  Ongoing Buzz
+                </span>
+              </div>
+              <p class="text-sm text-slate-300 leading-relaxed">
+                Each week in June becomes its own Spider-Man event—classic trilogy, Amazing era,
+                animated Spider-Verse, and MCU crossovers. The marquee changes, the town decor
+                shifts, and locals have a reason to keep coming back.
+              </p>
+              <ul class="space-y-2 text-xs text-slate-300">
+                <li class="flex gap-2">
+                  <span class="text-[var(--spider-blue)] mt-[2px]">
+                    <i class="fa-solid fa-circle"></i>
+                  </span>
+                  <span>
+                    <span class="font-semibold text-slate-100">Four themed weeks</span> with
+                    curated lineups and repeatable marketing beats.
+                  </span>
+                </li>
+                <li class="flex gap-2">
+                  <span class="text-[var(--spider-blue)] mt-[2px]">
+                    <i class="fa-solid fa-circle"></i>
+                  </span>
+                  <span>
+                    Built-in anticipation: each week teases the next, keeping Spider-Man June in
+                    conversation all month.
+                  </span>
+                </li>
+                <li class="flex gap-2">
+                  <span class="text-[var(--spider-blue)] mt-[2px]">
+                    <i class="fa-solid fa-circle"></i>
+                  </span>
+                  <span>
+                    Easier for families and working guests to attend multiple nights without a
+                    marathon commitment.
+                  </span>
+                </li>
+              </ul>
+              <div class="mt-3 text-[0.7rem] text-slate-400">
+                Ideal if you want sustained foot traffic, recurring local promotions, and a
+                month-long presence on the marquee.
+              </div>
+            </div>
+
+            <!-- Epic Full Marathon -->
+            <div class="card p-6 sm:p-7 flex flex-col gap-4 border border-[rgba(255,23,68,0.7)]">
+              <div class="flex items-center justify-between gap-3">
+                <div>
+                  <p class="text-xs uppercase tracking-[0.25em] text-[var(--spider-red)]">
+                    Format Two
+                  </p>
+                  <h3 class="text-xl font-semibold text-slate-50">
+                    Epic Full Marathon
+                  </h3>
+                </div>
+                <span class="tag-pill px-3 py-1 text-[0.65rem] text-slate-100">
+                  <i class="fa-solid fa-bolt mr-1 text-[var(--spider-red)]"></i>
+                  One-Night Legend
+                </span>
+              </div>
+              <p class="text-sm text-slate-300 leading-relaxed">
+                One massive, all-day-and-night Spider-Man marathon that turns the theatre into a
+                pilgrimage site. Fans bring blankets, costumes, and stamina—emerging at sunrise
+                with bragging rights and photos that live online forever.
+              </p>
+              <ul class="space-y-2 text-xs text-slate-300">
+                <li class="flex gap-2">
+                  <span class="text-[var(--spider-red)] mt-[2px]">
+                    <i class="fa-solid fa-circle"></i>
+                  </span>
+                  <span>
+                    <span class="font-semibold text-slate-100">High-impact, single date</span> that
+                    ’s easy to market and easy to remember.
+                  </span>
+                </li>
+                <li class="flex gap-2">
+                  <span class="text-[var(--spider-red)] mt-[2px]">
+                    <i class="fa-solid fa-circle"></i>
+                  </span>
+                  <span>
+                    Potential for VIP passes, limited-edition merch, and “I survived the marathon”
+                    photo ops.
+                  </span>
+                </li>
+                <li class="flex gap-2">
+                  <span class="text-[var(--spider-red)] mt-[2px]">
+                    <i class="fa-solid fa-circle"></i>
+                  </span>
+                  <span>
+                    Perfect for press coverage, social media virality, and a marquee moment in
+                    theatre history.
+                  </span>
+                </li>
+              </ul>
+              <div class="mt-3 text-[0.7rem] text-slate-400">
+                Ideal if you want a single, unforgettable tentpole event that cements Spider-Man
+                June as a local legend.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LOCAL PARTNERS -->
+    <section id="partners" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+      <div class="section-shell p-6 sm:p-10 lg:px-12 lg:py-12 fade-in-up-delayed">
+        <div class="flex flex-col gap-6">
+          <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+            <div>
+              <p class="section-header text-[0.7rem] font-semibold uppercase text-slate-400">
+                Local Partners – Swing Through Maynard
+              </p>
+              <h2 class="text-2xl sm:text-3xl font-bold text-slate-50">
+                Turn downtown Maynard into Spider-Man’s neighborhood.
+              </h2>
+            </div>
+            <div class="text-xs text-slate-400 max-w-md">
+              Spider-Man June doesn’t stop at the theatre doors. With ticket-stub discounts and
+              themed offers, the entire town becomes part of the experience.
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5 mt-2">
+            <!-- Felixology Bookshop -->
+            <div class="card p-4 flex flex-col gap-3">
+              <div class="flex items-center justify-between gap-2">
+                <h3 class="text-sm font-semibold text-slate-50">
+                  Felixology Bookshop
+                </h3>
+                <span class="tag-pill px-2.5 py-1 text-[0.6rem] text-[var(--spider-blue)] font-semibold">
+                  15% OFF
+                </span>
+              </div>
+              <p class="text-xs text-slate-300">
+                Show your Spider-Man June ticket stub and get
+                <span class="font-semibold text-slate-100">15% off</span> graphic novels, comics,
+                and superhero lit.
+              </p>
+              <p class="text-[0.7rem] text-slate-400">
+                Perfect pre-show stop for fans wanting to dive deeper into the Spider-Verse.
+              </p>
+            </div>
+
+            <!-- Restaurants -->
+            <div class="card p-4 flex flex-col gap-3">
+              <div class="flex items-center justify-between gap-2">
+                <h3 class="text-sm font-semibold text-slate-50">
+                  Partner Restaurants
+                </h3>
+                <span class="tag-pill px-2.5 py-1 text-[0.6rem] text-[var(--spider-red)] font-semibold">
+                  20% OFF
+                </span>
+              </div>
+              <p class="text-xs text-slate-300">
+                Local restaurants offer
+                <span class="font-semibold text-slate-100">20% off dinner</span> with a same-day
+                Spider-Man June ticket.
+              </p>
+              <p class="text-[0.7rem] text-slate-400">
+                Encourage pre-show dining and post-show debriefs—keeping guests in downtown
+                Maynard longer.
+              </p>
+            </div>
+
+            <!-- Coffee / Ice Cream -->
+            <div class="card p-4 flex flex-col gap-3">
+              <div class="flex items-center justify-between gap-2">
+                <h3 class="text-sm font-semibold text-slate-50">
+                  Coffee & Ice Cream
+                </h3>
+                <span class="tag-pill px-2.5 py-1 text-[0.6rem] text-[var(--spider-blue)] font-semibold">
+                  Themed Drinks
+                </span>
+              </div>
+              <p class="text-xs text-slate-300">
+                “Spider-Sense Espresso”, “Web-Slinger Float”, and “Red & Blue Swirl” specials
+                during Spider-Man June.
+              </p>
+              <p class="text-[0.7rem] text-slate-400">
+                Photo-ready menu items that tie directly into the event branding.
+              </p>
+            </div>
+
+            <!-- Comic Stores -->
+            <div class="card p-4 flex flex-col gap-3">
+              <div class="flex items-center justify-between gap-2">
+                <h3 class="text-sm font-semibold text-slate-50">
+                  Comic & Hobby Shops
+                </h3>
+                <span class="tag-pill px-2.5 py-1 text-[0.6rem] text-[var(--spider-red)] font-semibold">
+                  10% OFF
+                </span>
+              </div>
+              <p class="text-xs text-slate-300">
+                Ticket holders receive
+                <span class="font-semibold text-slate-100">10% off Spider-Man merch</span>,
+                back issues, and collectibles.
+              </p>
+              <p class="text-[0.7rem] text-slate-400">
+                Cross-promote with in-store posters, QR codes, and costume-contest tie-ins.
+              </p>
+            </div>
+          </div>
+
+          <div class="mt-6 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+            <div class="text-xs text-slate-300 max-w-2xl">
+              <p class="font-semibold text-slate-100 mb-1">
+                Ticket Stub = Citywide Spider-Pass
+              </p>
+              <p>
+                Every Spider-Man June ticket becomes a physical “pass” that unlocks discounts
+                around town. The more partners involved, the more the event feels like a full
+                downtown takeover—driving revenue for the theatre and local businesses together.
+              </p>
+            </div>
+            <button
+              id="becomePartnerBtn"
+              class="btn-outline inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold uppercase tracking-[0.22em] text-slate-100"
+            >
+              <i class="fa-solid fa-handshake-angle text-[var(--spider-blue)]"></i>
+              <span>Become a Partner</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- OFFICIAL PROPOSAL (Editable) -->
+    <section id="proposal" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+      <div class="section-shell p-6 sm:p-10 lg:p-12 fade-in-up">
+        <div class="flex flex-col gap-6">
+          <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+            <div>
+              <p class="section-header text-[0.7rem] font-semibold uppercase text-slate-400">
+                Official Proposal
+              </p>
+              <h2 class="text-2xl sm:text-3xl font-bold text-slate-50">
+                Editable concept deck, ready for refinement.
+              </h2>
+            </div>
+            <div class="flex flex-wrap gap-2 text-[0.7rem] text-slate-400">
+              <span class="tag-pill px-3 py-1">
+                <i class="fa-solid fa-pen-to-square mr-1 text-[var(--spider-blue)]"></i>
+                Live Editable
+              </span>
+              <span class="tag-pill px-3 py-1">
+                <i class="fa-solid fa-hard-drive mr-1 text-[var(--spider-red)]"></i>
+                Saves to Browser
+              </span>
+            </div>
+          </div>
+
+          <div class="card p-4 sm:p-6 lg:p-7">
+            <div
+              id="proposalEditable"
+              class="proposal-editable input-field p-4 sm:p-5 text-sm sm:text-base text-slate-100"
+              contenteditable="true"
+            ></div>
+            <div class="mt-4 flex flex-wrap items-center justify-between gap-3 text-[0.7rem]">
+              <div class="flex items-center gap-2 text-slate-400">
+                <i class="fa-solid fa-circle-info text-slate-500"></i>
+                <span>
+                  Edit this proposal directly. Your changes are saved automatically in this
+                  browser.
+                </span>
+              </div>
+              <div class="flex items-center gap-2">
+                <button
+                  id="resetProposalBtn"
+                  class="btn-outline px-4 py-2 rounded-full text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-slate-100"
+                >
+                  Reset to Default
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESERVE YOUR SPOT -->
+    <section id="reserve" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+      <div class="section-shell p-6 sm:p-10 lg:p-12 fade-in-up-delayed">
+        <div class="flex flex-col lg:flex-row gap-10 lg:gap-12">
+          <div class="flex-1 space-y-5">
+            <p class="section-header text-[0.7rem] font-semibold uppercase text-slate-400">
+              Reserve Your Spot Now
+            </p>
+            <h2 class="text-2xl sm:text-3xl font-bold text-slate-50">
+              Be first in line when Spider-Man June goes live.
+            </h2>
+            <div class="glow-divider my-4"></div>
+            <p class="text-sm sm:text-base text-slate-300 leading-relaxed">
+              This form is a concept reservation list—designed to show how easily Maynard Fine Arts
+              Theatre could capture interest, build an email list, and measure demand before
+              locking in dates.
+            </p>
+            <ul class="space-y-2 text-xs text-slate-300">
+              <li class="flex gap-2">
+                <span class="text-[var(--spider-blue)] mt-[2px]">
+                  <i class="fa-solid fa-circle"></i>
+                </span>
+                <span>Instant animated confirmation to make every sign-up feel rewarding.</span>
+              </li>
+              <li class="flex gap-2">
+                <span class="text-[var(--spider-blue)] mt-[2px]">
+                  <i class="fa-solid fa-circle"></i>
+                </span>
+                <span>LocalStorage persistence so entries remain visible during concept review.</span>
+              </li>
+              <li class="flex gap-2">
+                <span class="text-[var(--spider-blue)] mt-[2px]">
+                  <i class="fa-solid fa-circle"></i>
+                </span>
+                <span>Fields can easily be wired to a real mailing list or ticketing system.</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="flex-1">
+            <form id="reserveForm" class="card p-5 sm:p-6 lg:p-7 space-y-4" novalidate>
+              <div>
+                <label for="name" class="block text-xs font-semibold uppercase tracking-[0.22em] text-slate-300 mb-2">
+                  Name
+                </label>
+                <input
+                  id="name"
+                  type="text"
+                  class="input-field w-full px-3 py-2.5 text-sm text-slate-100"
+                  placeholder="Your full name"
+                  required
+                />
+              </div>
+              <div>
+                <label for="email" class="block text-xs font-semibold uppercase tracking-[0.22em] text-slate-300 mb-2">
+                  Email
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  class="input-field w-full px-3 py-2.5 text-sm text-slate-100"
+                  placeholder="you@example.com"
+                  required
+                />
+              </div>
+              <div>
+                <label for="tickets" class="block text-xs font-semibold uppercase tracking-[0.22em] text-slate-300 mb-2">
+                  Number of Tickets (Concept Interest)
+                </label>
+                <input
+                  id="tickets"
+                  type="number"
+                  min="1"
+                  max="20"
+                  class="input-field w-full px-3 py-2.5 text-sm text-slate-100"
+                  placeholder="e.g. 2"
+                  required
+                />
+              </div>
+              <button
+                type="submit"
+                class="btn-primary w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-full text-xs sm:text-sm font-semibold uppercase tracking-[0.22em] text-slate-50"
+              >
+                <i class="fa-solid fa-ticket text-sm"></i>
+                <span>Reserve Concept Spot</span>
+              </button>
+              <p
+                id="reserveConfirmation"
+                class="hidden mt-2 text-xs text-center text-[var(--spider-blue)] font-semibold"
+              >
+                <i class="fa-solid fa-circle-check mr-1"></i>
+                Reservation noted! Your interest helps bring Spider-Man June to life.
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SHARE THE HYPE -->
+    <section id="share" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+      <div class="section-shell p-6 sm:p-10 lg:p-12 fade-in-up">
+        <div class="flex flex-col gap-6">
+          <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+            <div>
+              <p class="section-header text-[0.7rem] font-semibold uppercase text-slate-400">
+                Share the Hype
+              </p>
+              <h2 class="text-2xl sm:text-3xl font-bold text-slate-50">
+                One click to turn Maynard into Spider-Man’s city.
+              </h2>
+            </div>
+            <div class="text-xs text-slate-400 max-w-md">
+              These buttons are wired with a pre-written hype message—ready to drop into social
+              feeds the moment Spider-Man June is greenlit.
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="card p-5 sm:p-6 flex flex-col gap-4">
+              <div class="flex flex-wrap gap-3">
+                <button
+                  id="shareTikTok"
+                  class="btn-outline inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-[0.22em] text-slate-100"
+                >
+                  <i class="fa-brands fa-tiktok text-base text-slate-50"></i>
+                  <span>TikTok</span>
+                </button>
+                <button
+                  id="shareX"
+                  class="btn-outline inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-[0.22em] text-slate-100"
+                >
+                  <i class="fa-brands fa-x-twitter text-base text-slate-50"></i>
+                  <span>X</span>
+                </button>
+                <button
+                  id="shareFacebook"
+                  class="btn-outline inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-[0.22em] text-slate-100"
+                >
+                  <i class="fa-brands fa-facebook-f text-base text-slate-50"></i>
+                  <span>Facebook</span>
+                </button>
+                <button
+                  id="shareWhatsApp"
+                  class="btn-outline inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-[0.22em] text-slate-100"
+                >
+                  <i class="fa-brands fa-whatsapp text-base text-green-400"></i>
+                  <span>WhatsApp</span>
+                </button>
+                <button
+                  id="shareLinkedIn"
+                  class="btn-outline inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-[0.22em] text-slate-100"
+                >
+                  <i class="fa-brands fa-linkedin-in text-base text-sky-400"></i>
+                  <span>LinkedIn</span>
+                </button>
+                <button
+                  id="shareEmail"
+                  class="btn-outline inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-[0.22em] text-slate-100"
+                >
+                  <i class="fa-solid fa-envelope text-base text-amber-300"></i>
+                  <span>Email</span>
+                </button>
+              </div>
+              <p class="text-xs text-slate-300">
+                These open each platform’s share or compose flow with the hype text ready to paste
+                or send.
+              </p>
+            </div>
+
+            <div class="card p-5 sm:p-6 flex flex-col gap-3">
+              <div class="flex items-center justify-between gap-3">
+                <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-300">
+                  Copy Viral Message
+                </p>
+                <button
+                  id="copyMessageBtn"
+                  class="btn-primary px-4 py-2 rounded-full text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-slate-50"
+                >
+                  <i class="fa-solid fa-copy mr-1 text-xs"></i>
+                  Copy Text
+                </button>
+              </div>
+              <div
+                id="viralMessage"
+                class="input-field p-3 text-xs text-slate-200 bg-slate-950/80"
+              >
+Spider-Man June at Maynard Fine Arts Theatre. Historic neon marquee. Full month of Spider-Man on the big screen. Local discounts, themed nights, and an epic community event. If you want this to happen, say so now. 🕷️🎬 #SpiderManJune #MaynardMA
+              </div>
+              <p
+                id="copyConfirmation"
+                class="hidden text-[0.7rem] text-[var(--spider-blue)] font-semibold mt-1"
+              >
+                <i class="fa-solid fa-circle-check mr-1"></i>
+                Hype message copied. Paste it into your favorite platform and swing the word out.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA + FOOTER -->
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="section-shell p-6 sm:p-10 lg:p-12 fade-in-up-delayed">
+        <div class="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start lg:items-center">
+          <div class="flex-1 space-y-4">
+            <p class="section-header text-[0.7rem] font-semibold uppercase text-slate-400">
+              Final Call to Action
+            </p>
+            <h2 class="text-2xl sm:text-3xl font-bold text-slate-50">
+              Let’s make Spider-Man June the moment Maynard glows brighter than Times Square.
+            </h2>
+            <p class="text-sm sm:text-base text-slate-300 leading-relaxed">
+              The theatre is ready. The town is ready. The marquee is literally built for this.
+              With a focused campaign, local partners, and a clear format, Spider-Man June can be
+              the kind of event that people talk about for years—and that they expect to see return.
+            </p>
+            <p class="text-sm sm:text-base text-slate-300 leading-relaxed">
+              Approve the concept, lock in the dates, and let the web-slinging begin.
+            </p>
+            <button
+              onclick="document.getElementById('reserve').scrollIntoView({behavior:'smooth'})"
+              class="btn-primary inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-xs sm:text-sm font-semibold uppercase tracking-[0.22em] text-slate-50"
+            >
+              <i class="fa-solid fa-circle-check text-sm"></i>
+              <span>Signal Interest & Reserve Concept Spots</span>
+            </button>
+          </div>
+
+          <div class="w-full lg:w-80 text-xs text-slate-400 space-y-3">
+            <div>
+              <p class="font-semibold text-slate-100 mb-1">
+                Maynard Fine Arts Theatre
+              </p>
+              <p>19 Summer Street</p>
+              <p>Maynard, MA 01754</p>
+            </div>
+            <div>
+              <p class="font-semibold text-slate-100 mb-1">
+                Concept & Proposal
+              </p>
+              <p>Presented by <span class="text-slate-50">@TaTTeD_HaTTeR</span></p>
+              <p class="mt-1 text-[0.7rem] text-slate-500">
+                “Brand New Day” reference · July 31, 2026 — a nod to new beginnings and bold
+                stories.
+              </p>
+            </div>
+            <div class="glow-divider my-3"></div>
+            <p class="text-[0.7rem] text-slate-500">
+              This page is a cinematic concept mockup—designed to feel like an official Marvel
+              Studios event site while remaining fully customizable for Maynard Fine Arts Theatre.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Safe localStorage helpers
+    function safeGetItem(key) {
+      try {
+        return window.localStorage ? localStorage.getItem(key) : null;
+      } catch {
+        return null;
+      }
+    }
+    function safeSetItem(key, value) {
+      try {
+        if (window.localStorage) localStorage.setItem(key, value);
+      } catch {
+        // ignore
+      }
+    }
+
+    // -----------------------------
+    // Mobile Nav Toggle + smooth close on click
+    // -----------------------------
+    const mobileNavToggle = document.getElementById("mobileNavToggle");
+    const mobileNav = document.getElementById("mobileNav");
+
+    if (mobileNavToggle && mobileNav) {
+      mobileNavToggle.addEventListener("click", () => {
+        mobileNav.classList.toggle("hidden");
+        mobileNavToggle.innerHTML = mobileNav.classList.contains("hidden")
+          ? '<i class="fa-solid fa-bars text-sm"></i>'
+          : '<i class="fa-solid fa-xmark text-sm"></i>';
+      });
+
+      mobileNav.querySelectorAll("a[href^='#']").forEach((link) => {
+        link.addEventListener("click", () => {
+          mobileNav.classList.add("hidden");
+          mobileNavToggle.innerHTML = '<i class="fa-solid fa-bars text-sm"></i>';
+        });
+      });
+    }
+
+    // -----------------------------
+    // Editable Proposal with localStorage
+    // -----------------------------
+    const PROPOSAL_KEY = "spiderman_june_proposal_v1";
+    const proposalEditable = document.getElementById("proposalEditable");
+    const resetProposalBtn = document.getElementById("resetProposalBtn");
+
+    const defaultProposalText = `Spider-Man June · Official Concept Proposal
+Maynard Fine Arts Theatre · 19 Summer Street · Maynard, MA
+
+Overview
+Spider-Man June is a month-long, premium cinematic celebration of Marvel’s iconic web-slinger, staged entirely at Maynard Fine Arts Theatre. The goal is to transform the historic 1949 Theatre Place and downtown Maynard into Spider-Man’s neighborhood—through curated screenings, local business partnerships, and a marquee that glows red all month long.
+
+Core Concept
+• A focused, Spider-Man-only programming block that feels intentional, curated, and event-level.
+• Weekly themed nights OR a single epic full marathon, depending on scheduling and demand.
+• Cross-promotion with local businesses (bookshops, restaurants, coffee/ice cream, comic stores) using ticket-stub discounts.
+• A marketing push that positions Maynard Fine Arts Theatre as the heart of a community-wide Spider-Man celebration.
+
+Why This Works for Maynard Fine Arts Theatre
+• The theatre’s historic neon marquee visually aligns with Spider-Man’s red-and-blue palette.
+• A single-screen venue allows for a tightly branded, immersive experience.
+• Downtown Maynard’s walkable layout makes it ideal for pre- and post-show partner offers.
+
+Programming Ideas
+• Week 1: Classic Trilogy Night(s)
+• Week 2: Amazing Spider-Man Era
+• Week 3: Animated Spider-Verse Showcase
+• Week 4: MCU Spider-Man & Team-Ups
+OR
+• One all-day/all-night Spider-Man Marathon with VIP passes, photo ops, and themed concessions.
+
+Local Partner Integration
+• Felixology Bookshop: 15% off Spider-Man and superhero titles with ticket stub.
+• Restaurants: 20% off dinner with same-day Spider-Man June ticket.
+• Coffee & Ice Cream: Spider-themed drinks and desserts (e.g., “Spider-Sense Espresso”, “Web-Slinger Float”).
+• Comic & Hobby Shops: 10% off Spider-Man merch and back issues with ticket stub.
+
+Marketing & Hype
+• Social media campaign using #SpiderManJune and #MaynardMA.
+• Photo-friendly marquee shots and downtown displays.
+• Potential costume nights, trivia, and fan-vote screenings.
+
+Next Steps
+1. Select preferred format: Weekly Themed Nights or Epic Full Marathon.
+2. Confirm target dates in June.
+3. Invite and confirm local partners.
+4. Launch pre-interest list and early marketing push.
+
+Presented by: @TaTTeD_HaTTeR
+Reference: “Brand New Day” · July 31, 2026 — a fresh chapter for Maynard Fine Arts Theatre and its community.`;
+
+    function loadProposal() {
+      if (!proposalEditable) return;
+      const saved = safeGetItem(PROPOSAL_KEY);
+      proposalEditable.textContent = saved || defaultProposalText;
+    }
+
+    function saveProposal() {
+      if (!proposalEditable) return;
+      safeSetItem(PROPOSAL_KEY, proposalEditable.textContent);
+    }
+
+    if (proposalEditable) {
+      proposalEditable.addEventListener("input", saveProposal);
+    }
+
+    if (resetProposalBtn) {
+      resetProposalBtn.addEventListener("click", () => {
+        if (!proposalEditable) return;
+        proposalEditable.textContent = defaultProposalText;
+        saveProposal();
+      });
+    }
+
+    loadProposal();
+
+    // -----------------------------
+    // Reserve Form with localStorage + animated confirmation
+    // -----------------------------
+    const RESERVE_KEY = "spiderman_june_reserve_v1";
+    const reserveForm = document.getElementById("reserveForm");
+    const reserveConfirmation = document.getElementById("reserveConfirmation");
+    const nameInput = document.getElementById("name");
+    const emailInput = document.getElementById("email");
+    const ticketsInput = document.getElementById("tickets");
+
+    function loadReserve() {
+      const saved = safeGetItem(RESERVE_KEY);
+      if (!saved) return;
+      try {
+        const data = JSON.parse(saved);
+        if (data.name && nameInput) nameInput.value = data.name;
+        if (data.email && emailInput) emailInput.value = data.email;
+        if (data.tickets && ticketsInput) ticketsInput.value = data.tickets;
+      } catch (e) {
+        console.error("Error parsing reserve data", e);
+      }
+    }
+
+    function saveReserve() {
+      const data = {
+        name: nameInput ? nameInput.value.trim() : "",
+        email: emailInput ? emailInput.value.trim() : "",
+        tickets: ticketsInput ? ticketsInput.value.trim() : "",
+      };
+      safeSetItem(RESERVE_KEY, JSON.stringify(data));
+    }
+
+    if (reserveForm) {
+      reserveForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (!nameInput.value.trim() || !emailInput.value.trim() || !ticketsInput.value.trim()) {
+          // basic client-side validation
+          [nameInput, emailInput, ticketsInput].forEach((el) => {
+            if (el && !el.value.trim()) {
+              el.classList.add("ring-1", "ring-[var(--spider-red)]");
+            } else if (el) {
+              el.classList.remove("ring-1", "ring-[var(--spider-red)]");
+            }
+          });
+          return;
+        }
+        saveReserve();
+        if (reserveConfirmation) {
+          reserveConfirmation.classList.remove("hidden");
+          reserveConfirmation.classList.remove("confirm-burst");
+          void reserveConfirmation.offsetWidth; // restart animation
+          reserveConfirmation.classList.add("confirm-burst");
+        }
+      });
+    }
+
+    loadReserve();
+
+    // -----------------------------
+    // Local Partners CTA (scroll to reserve)
+    // -----------------------------
+    const becomePartnerBtn = document.getElementById("becomePartnerBtn");
+    if (becomePartnerBtn) {
+      becomePartnerBtn.addEventListener("click", () => {
+        const target = document.getElementById("reserve");
+        if (target) target.scrollIntoView({ behavior: "smooth" });
+      });
+    }
+
+    // -----------------------------
+    // Share the Hype
+    // -----------------------------
+    const shareTikTok = document.getElementById("shareTikTok");
+    const shareX = document.getElementById("shareX");
+    const shareFacebook = document.getElementById("shareFacebook");
+    const shareWhatsApp = document.getElementById("shareWhatsApp");
+    const shareLinkedIn = document.getElementById("shareLinkedIn");
+    const shareEmail = document.getElementById("shareEmail");
+    const copyMessageBtn = document.getElementById("copyMessageBtn");
+    const viralMessage = document.getElementById("viralMessage");
+    const copyConfirmation = document.getElementById("copyConfirmation");
+
+    const hypeText =
+      "Spider-Man June at Maynard Fine Arts Theatre. Historic neon marquee. Full month of Spider-Man on the big screen. Local discounts, themed nights, and an epic community event. If you want this to happen, say so now. 🕷️🎬 #SpiderManJune #MaynardMA";
+
+    function openShare(url) {
+      window.open(url, "_blank", "noopener,noreferrer");
+    }
+
+    if (shareTikTok) {
+      shareTikTok.addEventListener("click", () => {
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(hypeText).catch(() => {});
+        }
+        openShare("https://www.tiktok.com/");
+      });
+    }
+
+    if (shareX) {
+      shareX.addEventListener("click", () => {
+        const url = "https://x.com/intent/tweet?text=" + encodeURIComponent(hypeText);
+        openShare(url);
+      });
+    }
+
+    if (shareFacebook) {
+      shareFacebook.addEventListener("click", () => {
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(hypeText).catch(() => {});
+        }
+        openShare("https://www.facebook.com/");
+      });
+    }
+
+    if (shareWhatsApp) {
+      shareWhatsApp.addEventListener("click", () => {
+        const url = "https://wa.me/?text=" + encodeURIComponent(hypeText);
+        openShare(url);
+      });
+    }
+
+    if (shareLinkedIn) {
+      shareLinkedIn.addEventListener("click", () => {
+        const url =
+          "https://www.linkedin.com/sharing/share-offsite/?mini=true&summary=" +
+          encodeURIComponent(hypeText);
+        openShare(url);
+      });
+    }
+
+    if (shareEmail) {
+      shareEmail.addEventListener("click", () => {
+        const subject = "Spider-Man June at Maynard Fine Arts Theatre";
+        const mailto =
+          "mailto:?subject=" +
+          encodeURIComponent(subject) +
+          "&body=" +
+          encodeURIComponent(hypeText);
+        window.location.href = mailto;
+      });
+    }
+
+    if (copyMessageBtn) {
+      copyMessageBtn.addEventListener("click", () => {
+        if (navigator.clipboard) {
+          navigator.clipboard
+            .writeText(hypeText)
+            .then(() => {
+              if (copyConfirmation) {
+                copyConfirmation.classList.remove("hidden");
+                copyConfirmation.classList.remove("copy-pulse");
+                void copyConfirmation.offsetWidth;
+                copyConfirmation.classList.add("copy-pulse");
+              }
+            })
+            .catch(() => {
+              if (viralMessage) {
+                const range = document.createRange();
+                range.selectNodeContents(viralMessage);
+                const sel = window.getSelection();
+                sel.removeAllRanges();
+                sel.addRange(range);
+              }
+            });
+        } else if (viralMessage) {
+          const range = document.createRange();
+          range.selectNodeContents(viralMessage);
+          const sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(range);
+        }
+      });
+    }
+  </script>
+</body>
+</html>
